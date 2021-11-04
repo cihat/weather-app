@@ -1,11 +1,15 @@
 <script>
 import { mapActions, mapState } from "vuex"
 import CurrentWeather from "@/components/CurrentWeather.vue"
+import HourlyWeather from "@/components/HourlyWeather.vue"
+import DailyWeather from "@/components/DailyWeather.vue"
 
 export default {
   name: "Home",
   components: {
     CurrentWeather,
+    HourlyWeather,
+    DailyWeather,
   },
   data() {
     return {
@@ -39,15 +43,15 @@ export default {
 <template>
   <div class="home">
     <h1>Weather App</h1>
-    <!-- <input
+    <input
       type="text"
       name="input-city"
       id="weather"
       v-model="city"
       v-on:keyup.enter="getWeather"
     />
-    <p>{{ city }}</p>
-    <div class="result">
+    <!-- <p>{{ city }}</p> -->
+    <!-- <div class="result">
       <p v-if="errMessage">{{ errMessage }}</p>
       <p v-else-if="isLoading">Please wait..⌛️.</p>
       <p v-else>{{ JSON.stringify(weather) }}</p>
@@ -59,12 +63,12 @@ export default {
           <!-- :weather="weather" -->
         </div>
         <!-- <div className="col-md-8 order-md-2 container">
-          <HourlyWeather temperature="{temperature}" />
-        </div>
-
+          <HourlyWeather />
+        </div> -->
         <div className="col-md-12 order-md-5 mt-5">
           <DailyWeather temperature="{temperature}" />
         </div>
+        <!--
         <div className="col-md-12 order-md-4 bg-dark pt-5 pb-5">
           <WeatherDescription temperature="{temperature}" />
         </div>
