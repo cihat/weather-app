@@ -2,6 +2,7 @@
 import { mapState, mapActions, mapGetters } from "vuex"
 
 export default {
+  name: "CurrentWeather",
   data() {
     return {
       weatherMain: "",
@@ -24,7 +25,7 @@ export default {
 
 <template>
   <div>
-    <p>{{ weather }}</p>
+    <!-- <p>{{ weather }}</p> -->
     <div className="d-flex flex-column align-items-center">
       <h2 className="location-name">{{ weather?.name }}</h2>
       <h4 className="weather-short-description">
