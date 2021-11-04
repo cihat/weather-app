@@ -42,7 +42,7 @@ const windDegreeToText = (degree) => {
   }
 };
 
-export default {
+export {
   kelvinToCelsius,
   kelvinToFahrenheit,
   windDegreeToText,

@@ -3,6 +3,12 @@ import { mapActions, mapState } from "vuex"
 import CurrentWeather from "@/components/CurrentWeather.vue"
 import HourlyWeather from "@/components/HourlyWeather.vue"
 import DailyWeather from "@/components/DailyWeather.vue"
+import {
+  kelvinToCelsius,
+  kelvinToFahrenheit,
+  windDegreeToText,
+} from "@/helpers/temprature"
+import renderjson from "renderjson"
 
 export default {
   name: "Home",
@@ -13,8 +19,7 @@ export default {
   },
   data() {
     return {
-      city: "",
-      localWeather: null,
+      city: "Elazıg",
       errMessage: "",
       isLoading: true,
     }
@@ -23,7 +28,7 @@ export default {
     ...mapState(["weather"]),
   },
   created() {
-    this.getWeather("Adıyaman")
+    this.getWeather()
   },
   methods: {
     ...mapActions(["fetchWeather"]),
@@ -36,50 +41,81 @@ export default {
         this.isLoading = false
       }
     },
+    kelvinToCelsius(temp) {
+      return kelvinToCelsius(temp)
+    },
+    renderjson(object) {
+      return renderjson(object)
+    },
   },
+  filters: {},
 }
 </script>
 
 <template>
-  <div class="home">
-    <h1>Weather App</h1>
-    <input
-      type="text"
-      name="input-city"
-      id="weather"
-      v-model="city"
-      v-on:keyup.enter="getWeather"
-    />
-    <!-- <p>{{ city }}</p> -->
-    <!-- <div class="result">
-      <p v-if="errMessage">{{ errMessage }}</p>
-      <p v-else-if="isLoading">Please wait..⌛️.</p>
-      <p v-else>{{ JSON.stringify(weather) }}</p>
-    </div> -->
-    <div className="mb-5">
-      <div className="row justify-content-center align-items-center">
-        <div className="col-md-4 order-md-1 container">
-          <CurrentWeather />
-          <!-- :weather="weather" -->
-        </div>
-        <!-- <div className="col-md-8 order-md-2 container">
-          <HourlyWeather />
-        </div> -->
-        <div className="col-md-12 order-md-5 mt-5">
-          <DailyWeather temperature="{temperature}" />
-        </div>
-        <!--
-        <div className="col-md-12 order-md-4 bg-dark pt-5 pb-5">
-          <WeatherDescription temperature="{temperature}" />
-        </div>
-        <div className="col-12 my-5 text-center order-md-2">
-          Today: {weather.current.weather[0].description}. The high will be{' '}
-          {temperature(weather.daily[0].temp.max)}. The low tonight will be{' '}
-          {temperature(weather.daily[0].temp.night)}.
-        </div> -->
+  <div class="container">
+    <div class="wrapper">
+      <h1 class="title">Weather App</h1>
+      <input
+        type="text"
+        name="input-city"
+        id="weather"
+        v-model="city"
+        v-on:keyup.enter="getWeather"
+      />
+      <!-- <p>{{ city }}</p> -->
+      <p>Temperature</p>
+      <p>{{ kelvinToCelsius(weather.main.temp) }}</p>
+      <div class="image_wrapper">
+        <img
+          className="img-fluid weather-img"
+          :src="`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`"
+          :alt="weather.weather[0].description"
+        />
       </div>
+      <!-- <pre>{{ JSON.stringify(weather, null, 2) }}</pre> -->
+      <div>{{ renderjson(weather) }}</div>
     </div>
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.container {
+  height: calc(100vh - 30px);
+  overflow-y: hidden;
+  background-color: #f5f5f5;
+  background: url("../assets/images/bg.jpeg") no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+
+  .wrapper {
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 90%;
+    padding: 1rem;
+
+    .title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .image_wrapper {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      width: 100px;
+      margin: auto;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .render_json {
+    }
+  }
+}
+</style>
