@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "register-service-worker": "^1.7.1",
     "renderjson": "^1.4.0",
     "vue": "^3.0.0",
